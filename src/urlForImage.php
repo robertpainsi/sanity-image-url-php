@@ -95,7 +95,10 @@ function specToImageUrl( $spec ) {
 
 	if ( ! empty( $spec[ 'rect' ] ) ) {
 		$rect            = $spec[ 'rect' ];
-		$isEffectiveCrop = $rect[ 'left' ] !== 0 || $rect[ 'top' ] !== 0 || $rect[ 'height' ] !== $spec[ 'asset' ][ 'height' ] || $rect[ 'width' ] !== $spec[ 'asset' ][ 'width' ];
+		$isEffectiveCrop = $rect[ 'left' ] !== 0.0
+		                   || $rect[ 'top' ] !== 0.0
+		                   || $rect[ 'height' ] !== $spec[ 'asset' ][ 'height' ]
+		                   || $rect[ 'width' ] !== $spec[ 'asset' ][ 'width' ];
 
 		if ( $isEffectiveCrop ) {
 			$params[] = "rect={$rect['left']},{$rect['top']},{$rect['width']},{$rect['height']}";
@@ -111,7 +114,10 @@ function specToImageUrl( $spec ) {
 		$params[] = "fp-y=" . $spec[ 'focalPoint' ][ 'y' ];
 	}
 
-	$flip = implode( '', array_filter( [ $spec[ 'flipHorizontal' ] ? 'h' : '', $spec[ 'flipVertical' ] ? 'v' : '' ] ) );
+	$flip = implode( '', array_filter( [
+		isset( $spec[ 'flipHorizontal' ] ) ? 'h' : '',
+		isset( $spec[ 'flipVertical' ] ) ? 'v' : ''
+	] ) );
 	if ( $flip ) {
 		$params[] = "flip={$flip}";
 	}
@@ -158,10 +164,10 @@ function fit( $source, $spec ) {
 	if ( $cropAspectRatio > $desiredAspectRatio ) {
 		$height = round( $crop[ 'height' ] );
 		$width  = round( $height * $desiredAspectRatio );
-		$top    = max( 0, round( $crop[ 'top' ] ) );
+		$top    = max( 0.0, round( $crop[ 'top' ] ) );
 
 		$hotspotXCenter = round( ( $hotspot[ 'right' ] - $hotspot[ 'left' ] ) / 2 + $hotspot[ 'left' ] );
-		$left           = max( 0, round( $hotspotXCenter - $width / 2 ) );
+		$left           = max( 0.0, round( $hotspotXCenter - $width / 2 ) );
 
 		if ( $left < $crop[ 'left' ] ) {
 			$left = $crop[ 'left' ];
@@ -173,10 +179,10 @@ function fit( $source, $spec ) {
 	} else {
 		$width  = $crop[ 'width' ];
 		$height = round( $width / $desiredAspectRatio );
-		$left   = max( 0, round( $crop[ 'left' ] ) );
+		$left   = max( 0.0, round( $crop[ 'left' ] ) );
 
 		$hotspotYCenter = round( ( $hotspot[ 'bottom' ] - $hotspot[ 'top' ] ) / 2 + $hotspot[ 'top' ] );
-		$top            = max( 0, round( $hotspotYCenter - $height / 2 ) );
+		$top            = max( 0.0, round( $hotspotYCenter - $height / 2 ) );
 
 		if ( $top < $crop[ 'top' ] ) {
 			$top = $crop[ 'top' ];

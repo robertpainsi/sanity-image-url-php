@@ -33,9 +33,8 @@ function parseAssetId( string $ref ): array {
 
 	list( $imgWidthStr, $imgHeightStr ) = $dimensions;
 
-	// Convert to integers
-	$width  = (int) $imgWidthStr;
-	$height = (int) $imgHeightStr;
+	$width  = (float) $imgWidthStr;
+	$height = (float) $imgHeightStr;
 
 	// Check if the width and height are valid numbers
 	if ( ! is_finite( $width ) || ! is_finite( $height ) ) {

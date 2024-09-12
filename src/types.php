@@ -8,20 +8,20 @@ class ImageUrlBuilderOptions {
 	public $source = null; // Can be of various types like string, SanityReference, etc.
 	public ?string $bg = null;
 	public ?float $dpr = null;
-	public ?int $width = null;
-	public ?int $height = null;
-	public ?array $focalPoint = null; // ['x' => float, 'y' => float]
-	public ?int $maxWidth = null;
-	public ?int $maxHeight = null;
-	public ?int $minWidth = null;
-	public ?int $minHeight = null;
-	public ?int $blur = null;
-	public ?int $sharpen = null;
+	public ?float $width = null;
+	public ?float $height = null;
+	public ?array $focalPofloat = null; // ['x' => float, 'y' => float]
+	public ?float $maxWidth = null;
+	public ?float $maxHeight = null;
+	public ?float $minWidth = null;
+	public ?float $minHeight = null;
+	public ?float $blur = null;
+	public ?float $sharpen = null;
 	public ?array $rect = null; // ['left' => int, 'top' => int, 'width' => int, 'height' => int]
 	public ?string $format = null; // ImageFormat type
 	public ?bool $invert = null;
-	public ?int $orientation = null; // Orientation type
-	public ?int $quality = null;
+	public ?float $orientation = null; // Orientation type
+	public ?float $quality = null;
 	public $download = null; // Can be boolean or string
 	public ?bool $flipHorizontal = null;
 	public ?bool $flipVertical = null;
@@ -30,26 +30,26 @@ class ImageUrlBuilderOptions {
 	public ?string $crop = null; // CropMode type
 	public ?float $saturation = null;
 	public ?string $auto = null; // AutoMode type
-	public ?int $pad = null;
-	public ?int $frame = null;
+	public ?float $pad = null;
+	public ?float $frame = null;
 }
 
 /**
  * ImageUrlBuilderOptionsWithAliases extends ImageUrlBuilderOptions and adds additional alias properties.
  */
 class ImageUrlBuilderOptionsWithAliases extends ImageUrlBuilderOptions {
-	public ?int $w = null;
-	public ?int $h = null;
-	public ?int $q = null;
+	public ?float $w = null;
+	public ?float $h = null;
+	public ?float $q = null;
 	public ?string $fm = null;
 	public $dl = null; // Can be boolean or string
-	public ?int $or = null; // Orientation type
-	public ?int $sharp = null;
-	public ?int $min_h = null;
-	public ?int $max_h = null;
-	public ?int $min_w = null;
-	public ?int $max_w = null;
-	public ?int $sat = null;
+	public ?float $or = null; // Orientation type
+	public ?float $sharp = null;
+	public ?float $min_h = null;
+	public ?float $max_h = null;
+	public ?float $min_w = null;
+	public ?float $max_w = null;
+	public ?float $sat = null;
 	public array $additionalParams = []; // Holds any additional parameters
 }
 
@@ -119,16 +119,16 @@ class SanityAsset {
  */
 class SanityImageDimensions {
 	public float $aspectRatio;
-	public int $height;
-	public int $width;
+	public float $height;
+	public float $width;
 }
 
 /**
  * SanityImageFitResult class.
  */
 class SanityImageFitResult {
-	public ?int $width = null;
-	public ?int $height = null;
+	public ?float $width = null;
+	public ?float $height = null;
 	public array $rect; // ['left' => int, 'top' => int, 'width' => int, 'height' => int]
 }
 
@@ -136,10 +136,10 @@ class SanityImageFitResult {
  * SanityImageRect class.
  */
 class SanityImageRect {
-	public int $left;
-	public int $top;
-	public int $width;
-	public int $height;
+	public float $left;
+	public float $top;
+	public float $width;
+	public float $height;
 }
 
 /**

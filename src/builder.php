@@ -79,7 +79,7 @@ class ImageUrlBuilder {
 	}
 
 	public function withOptions( array $options ) {
-		$baseUrl = $options[ 'baseUrl' ] ?? $this->options[ 'baseUrl' ] ?? [];
+		$baseUrl = $options[ 'baseUrl' ] ?? $this->options[ 'baseUrl' ] ?? null;
 
 		$newOptions = [ 'baseUrl' => $baseUrl ];
 		foreach ( $options as $key => $value ) {
@@ -107,14 +107,14 @@ class ImageUrlBuilder {
 	}
 
 	public function dpr( float $dpr ) {
-		return $this->withOptions( $dpr && $dpr !== 1 ? [ 'dpr' => $dpr ] : [] );
+		return $this->withOptions( $dpr && $dpr !== 1.0 ? [ 'dpr' => $dpr ] : [] );
 	}
 
-	public function width( int $width ) {
+	public function width( float $width ) {
 		return $this->withOptions( [ 'width' => $width ] );
 	}
 
-	public function height( int $height ) {
+	public function height( float $height ) {
 		return $this->withOptions( [ 'height' => $height ] );
 	}
 
@@ -122,35 +122,35 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'focalPoint' => [ 'x' => $x, 'y' => $y ] ] );
 	}
 
-	public function maxWidth( int $maxWidth ) {
+	public function maxWidth( float $maxWidth ) {
 		return $this->withOptions( [ 'maxWidth' => $maxWidth ] );
 	}
 
-	public function minWidth( int $minWidth ) {
+	public function minWidth( float $minWidth ) {
 		return $this->withOptions( [ 'minWidth' => $minWidth ] );
 	}
 
-	public function maxHeight( int $maxHeight ) {
+	public function maxHeight( float $maxHeight ) {
 		return $this->withOptions( [ 'maxHeight' => $maxHeight ] );
 	}
 
-	public function minHeight( int $minHeight ) {
+	public function minHeight( float $minHeight ) {
 		return $this->withOptions( [ 'minHeight' => $minHeight ] );
 	}
 
-	public function size( int $width, int $height ) {
+	public function size( float $width, float $height ) {
 		return $this->withOptions( [ 'width' => $width, 'height' => $height ] );
 	}
 
-	public function blur( int $blur ) {
+	public function blur( float $blur ) {
 		return $this->withOptions( [ 'blur' => $blur ] );
 	}
 
-	public function sharpen( int $sharpen ) {
+	public function sharpen( float $sharpen ) {
 		return $this->withOptions( [ 'sharpen' => $sharpen ] );
 	}
 
-	public function rect( int $left, int $top, int $width, int $height ) {
+	public function rect( float $left, float $top, float $width, float $height ) {
 		return $this->withOptions( [
 			'rect' => [
 				'left'   => $left,
@@ -166,14 +166,14 @@ class ImageUrlBuilder {
 	}
 
 	public function invert( bool $invert ) {
-		return $this->withOptions( [ 'invert' => $invert ] );
+		return $this->withOptions( [ 'invert' => ( $invert ) ? 'true' : 'false' ] );
 	}
 
-	public function orientation( int $orientation ) {
+	public function orientation( float $orientation ) {
 		return $this->withOptions( [ 'orientation' => $orientation ] );
 	}
 
-	public function quality( int $quality ) {
+	public function quality( float $quality ) {
 		return $this->withOptions( [ 'quality' => $quality ] );
 	}
 
@@ -211,7 +211,7 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'crop' => $value ] );
 	}
 
-	public function saturation( int $saturation ) {
+	public function saturation( float $saturation ) {
 		return $this->withOptions( [ 'saturation' => $saturation ] );
 	}
 
@@ -224,12 +224,12 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'auto' => $value ] );
 	}
 
-	public function pad( int $pad ) {
+	public function pad( float $pad ) {
 		return $this->withOptions( [ 'pad' => $pad ] );
 	}
 
-	public function frame( int $frame ) {
-		if ( $frame !== 1 ) {
+	public function frame( float $frame ) {
+		if ( $frame !== 1.0 ) {
 			throw new InvalidArgumentException( "Invalid frame value \"$frame\"" );
 		}
 
@@ -238,6 +238,10 @@ class ImageUrlBuilder {
 
 	public function url() {
 		return urlForImage( $this->options );
+	}
+
+	public function toString() {
+		return $this->url();
 	}
 
 	public function __toString() {
