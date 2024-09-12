@@ -50,11 +50,3 @@ function parseAssetId( string $ref ): array {
 		'format' => $format
 	];
 }
-
-// Example usage
-try {
-	$result = parseAssetId( 'image-Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000-jpg' );
-	print_r( $result );
-} catch ( Exception $e ) {
-	echo $e->getMessage();
-}

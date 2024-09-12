@@ -139,11 +139,3 @@ function applyDefaults( array $image ) {
 
 	return $result;
 }
-
-// Example usage
-try {
-	$result = parseSource( 'https://example.com/path/to/image.jpg' );
-	print_r( $result );
-} catch ( Exception $e ) {
-	echo $e->getMessage();
-}

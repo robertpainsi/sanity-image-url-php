@@ -192,10 +192,3 @@ class HotspotSpec {
 	public float $right;
 	public float $bottom;
 }
-
-// Example usage
-$options         = new ImageUrlBuilderOptions();
-$options->width  = 800;
-$options->height = 600;
-
-print_r( $options );
