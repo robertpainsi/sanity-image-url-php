@@ -10,7 +10,7 @@ class BuilderTest extends TestCase {
 	private $urlFor;
 
 	protected function setUp(): void {
-		$this->urlFor = sanityImage()->projectId( 'zp7mbokg' )->dataset( 'production' );
+		$this->urlFor = urlBuilder()->projectId( 'zp7mbokg' )->dataset( 'production' );
 	}
 
 	private function stripPath( $url ) {
