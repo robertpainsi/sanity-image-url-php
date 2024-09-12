@@ -196,7 +196,7 @@ class ImageUrlBuilder {
 	public function fit( string $value ) {
 		global $validFits;
 		if ( ! in_array( $value, $validFits ) ) {
-			throw new Exception( "Invalid fit mode \"$value\"" );
+			throw new InvalidArgumentException( "Invalid fit mode \"$value\"" );
 		}
 
 		return $this->withOptions( [ 'fit' => $value ] );
@@ -205,7 +205,7 @@ class ImageUrlBuilder {
 	public function crop( string $value ) {
 		global $validCrops;
 		if ( ! in_array( $value, $validCrops ) ) {
-			throw new Exception( "Invalid crop mode \"$value\"" );
+			throw new InvalidArgumentException( "Invalid crop mode \"$value\"" );
 		}
 
 		return $this->withOptions( [ 'crop' => $value ] );
@@ -218,7 +218,7 @@ class ImageUrlBuilder {
 	public function auto( string $value ) {
 		global $validAutoModes;
 		if ( ! in_array( $value, $validAutoModes ) ) {
-			throw new Exception( "Invalid auto mode \"$value\"" );
+			throw new InvalidArgumentException( "Invalid auto mode \"$value\"" );
 		}
 
 		return $this->withOptions( [ 'auto' => $value ] );
@@ -230,7 +230,7 @@ class ImageUrlBuilder {
 
 	public function frame( int $frame ) {
 		if ( $frame !== 1 ) {
-			throw new Exception( "Invalid frame value \"$frame\"" );
+			throw new InvalidArgumentException( "Invalid frame value \"$frame\"" );
 		}
 
 		return $this->withOptions( [ 'frame' => $frame ] );
