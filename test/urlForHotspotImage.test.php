@@ -4,17 +4,22 @@ use PHPUnit\Framework\TestCase;
 
 // Include the function to test
 require_once '../src/urlForImage.php';
+require_once 'fixtures.php';
 
 class UrlForImageTest extends TestCase {
 	public function testShouldThrowOnInvalidSource() {
 		$this->expectException( Exception::class );
-		$this->expectExceptionMessage( 'Unable to resolve image URL from source ({})' );
+		$this->expectExceptionMessage( 'Unable to resolve image URL from source ([])' );
 
-		urlForImage( [ 'source' => (object) [] ] )->toString();
+		urlForImage( [ 'source' => [] ] )->toString();
 	}
 
 	public function testDoesNotCropWhenNoCropIsRequired() {
-		$url = urlForImage( [ 'source' => uncroppedImage(), 'projectId' => 'zp7mbokg', 'dataset' => 'production' ] );
+		$url = urlForImage( [
+			'source'    => ImageFixtures::uncroppedImage(),
+			'projectId' => 'zp7mbokg',
+			'dataset'   => 'production'
+		] );
 		$this->assertEquals(
 			'https://cdn.sanity.io/images/zp7mbokg/production/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg',
 			$url
@@ -23,7 +28,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testDoesNotCropButLimitsSizeWhenOnlyWidthDimensionIsSpecified() {
 		$url = urlForImage( [
-			'source'    => uncroppedImage(),
+			'source' => ImageFixtures::uncroppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 100
@@ -36,7 +41,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testDoesNotCropButLimitsSizeWhenOnlyHeightDimensionIsSpecified() {
 		$url = urlForImage( [
-			'source'    => uncroppedImage(),
+			'source' => ImageFixtures::uncroppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'height'    => 100
@@ -49,7 +54,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testATallCropIsCenteredOnTheHotspot() {
 		$url = urlForImage( [
-			'source'    => uncroppedImage(),
+			'source' => ImageFixtures::uncroppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 30,
@@ -63,7 +68,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testAWideCropIsCenteredOnTheHotspot() {
 		$url = urlForImage( [
-			'source'    => uncroppedImage(),
+			'source' => ImageFixtures::uncroppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 100,
@@ -77,7 +82,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testACropWithIdenticalAspectAndNoSpecifiedCropIsNotCropped() {
 		$url = urlForImage( [
-			'source'    => uncroppedImage(),
+			'source' => ImageFixtures::uncroppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 200,
@@ -90,7 +95,11 @@ class UrlForImageTest extends TestCase {
 	}
 
 	public function testRespectsTheCropEvenWhenNoExplicitCropIsAskedFor() {
-		$url = urlForImage( [ 'source' => croppedImage(), 'projectId' => 'zp7mbokg', 'dataset' => 'production' ] );
+		$url = urlForImage( [
+			'source'    => ImageFixtures::croppedImage(),
+			'projectId' => 'zp7mbokg',
+			'dataset'   => 'production'
+		] );
 		$this->assertEquals(
 			'https://cdn.sanity.io/images/zp7mbokg/production/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg?rect=200,300,1600,2400',
 			$url
@@ -99,7 +108,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testATallCropIsCenteredOnTheHotspotAndConstrainedWithinTheImageCrop() {
 		$url = urlForImage( [
-			'source'    => croppedImage(),
+			'source' => ImageFixtures::croppedImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 30,
@@ -113,8 +122,8 @@ class UrlForImageTest extends TestCase {
 
 	public function testIgnoresTheImageCropIfCallerSpecifiesAnother() {
 		$url = urlForImage( [
-			'source'    => croppedImage(),
-			'rect'      => (object) [ 'left' => 10, 'top' => 20, 'width' => 30, 'height' => 40 ],
+			'source' => ImageFixtures::croppedImage(),
+			'rect'   => [ 'left' => 10, 'top' => 20, 'width' => 30, 'height' => 40 ],
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 30,
@@ -128,7 +137,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testGracefullyHandlesANonHotspotImage() {
 		$url = urlForImage( [
-			'source'    => noHotspotImage(),
+			'source' => ImageFixtures::noHotspotImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'height'    => 100
@@ -141,7 +150,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testGracefullyHandlesANonCropImage() {
 		$url = urlForImage( [
-			'source'    => noHotspotImage(),
+			'source' => ImageFixtures::noHotspotImage(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'height'    => 100
@@ -154,7 +163,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testGracefullyHandlesMaterializedAsset() {
 		$url = urlForImage( [
-			'source'    => materializedAssetWithCrop(),
+			'source' => ImageFixtures::materializedAssetWithCrop(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'height'    => 100
@@ -167,7 +176,7 @@ class UrlForImageTest extends TestCase {
 
 	public function testGracefullyHandlesRoundingErrors() {
 		$url1 = urlForImage( [
-			'source'    => croppedPortraitImageRounding(),
+			'source' => ImageFixtures::croppedPortraitImageRounding(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 400,
@@ -179,7 +188,7 @@ class UrlForImageTest extends TestCase {
 		);
 
 		$url2 = urlForImage( [
-			'source'    => croppedLandscapeImageRounding(),
+			'source' => ImageFixtures::croppedLandscapeImageRounding(),
 			'projectId' => 'zp7mbokg',
 			'dataset'   => 'production',
 			'width'     => 600,
