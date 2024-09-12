@@ -1,5 +1,7 @@
 <?php
 
+require_once 'urlForImage.php';
+
 // Define valid modes as constants
 $validFits      = [ 'clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min' ];
 $validCrops     = [ 'top', 'bottom', 'left', 'right', 'center', 'focalpoint', 'entropy' ];
