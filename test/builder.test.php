@@ -77,24 +77,24 @@ class BuilderTest extends TestCase {
 	public function testShouldThrowOnInvalidFitMode() {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid fit mode "moo"' );
-		$this->urlFor->image( croppedImage() )->fit( 'moo' );
+		$this->urlFor->image( ImageFixtures::croppedImage() )->fit( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidCropMode() {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid crop mode "moo"' );
-		$this->urlFor->image( croppedImage() )->crop( 'moo' );
+		$this->urlFor->image( ImageFixtures::croppedImage() )->crop( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidAutoMode() {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid auto mode "moo"' );
-		$this->urlFor->image( croppedImage() )->auto( 'moo' );
+		$this->urlFor->image( ImageFixtures::croppedImage() )->auto( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidFrameNumber() {
 		$this->expectException( InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid frame value "2"' );
-		$this->urlFor->image( croppedImage() )->frame( 2 );
+		$this->urlFor->image( ImageFixtures::croppedImage() )->frame( 2 );
 	}
 }
