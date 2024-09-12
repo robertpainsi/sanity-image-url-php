@@ -77,7 +77,7 @@ class ImageUrlBuilder {
 	}
 
 	public function withOptions( array $options ) {
-		$baseUrl = $options[ 'baseUrl' ] ?? $this->options[ 'baseUrl' ];
+		$baseUrl = $options[ 'baseUrl' ] ?? $this->options[ 'baseUrl' ] ?? [];
 
 		$newOptions = [ 'baseUrl' => $baseUrl ];
 		foreach ( $options as $key => $value ) {
