@@ -18,7 +18,7 @@ function isSanityModernClientLike( $client ): bool {
  * Check if the client is of type SanityClientLike
  */
 function isSanityClientLike( $client ): bool {
-	return $client && isset( $client->clientConfig ) && is_array( $client->clientConfig );
+	return $client && isset( $client[ 'clientConfig' ] );
 }
 
 /**
@@ -54,7 +54,7 @@ function urlBuilder( $options = null ) {
 
 	// Did we get a SanityClient?
 	if ( isSanityClientLike( $options ) ) {
-		$config  = $options->clientConfig;
+		$config = $options[ 'clientConfig' ];
 		$apiHost = $config[ 'apiHost' ] ?? 'https://api.sanity.io';
 
 		return new ImageUrlBuilder( null, [

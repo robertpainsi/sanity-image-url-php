@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 
 // Include the necessary files
-require_once '../src/imgUrl.php';  // Assuming imgUrl function is defined here
+require_once '../src/builder.php';  // Assuming imgUrl function is defined here
 
 class CustomDomainsTest extends TestCase {
 	public function testCanSpecifyBaseUrl() {
@@ -13,7 +13,7 @@ class CustomDomainsTest extends TestCase {
 			'baseUrl'   => 'https://mycustom.domain',
 		];
 
-		$url = imgUrl( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
 		$this->assertEquals(
 			'https://mycustom.domain/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url
@@ -27,7 +27,7 @@ class CustomDomainsTest extends TestCase {
 			'baseUrl'   => 'https://mycustom.domain/', // Trailing slash in baseUrl
 		];
 
-		$url = imgUrl( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
 		$this->assertEquals(
 			'https://mycustom.domain/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url
@@ -43,7 +43,7 @@ class CustomDomainsTest extends TestCase {
 			],
 		];
 
-		$url = imgUrl( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
 		$this->assertEquals(
 			'https://cdn.totally.custom/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url
