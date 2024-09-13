@@ -1,14 +1,17 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace SanityImageUrlTest;
 
 // Include the function to test
 require_once '../src/urlForImage.php';
 require_once 'fixtures.php';
 
+use PHPUnit\Framework\TestCase;
+use function SanityImageUrl\urlForImage;
+
 class UrlForImageTest extends TestCase {
 	public function testShouldThrowOnInvalidSource() {
-		$this->expectException( Exception::class );
+		$this->expectException( \Exception::class );
 		$this->expectExceptionMessage( 'Unable to resolve image URL from source ([])' );
 
 		urlForImage( [ 'source' => [] ] )->toString();

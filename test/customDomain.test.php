@@ -1,9 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace SanityImageUrlTest;
 
 // Include the necessary files
 require_once '../src/builder.php';  // Assuming imgUrl function is defined here
+
+use PHPUnit\Framework\TestCase;
+use function SanityImageUrl\urlBuilder;
 
 class CustomDomainsTest extends TestCase {
 	public function testCanSpecifyBaseUrl() {

@@ -1,10 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace SanityImageUrlTest;
 
-// Include the necessary files
+require_once 'fixtures.php';
 require_once '../src/builder.php';
-require_once './fixtures.php';
+
+use PHPUnit\Framework\TestCase;
+use function SanityImageUrl\urlBuilder;
 
 class BuilderTest extends TestCase {
 	private $urlFor;
@@ -244,25 +246,25 @@ class BuilderTest extends TestCase {
 	}
 
 	public function testShouldThrowOnInvalidFitMode() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( \InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid fit mode "moo"' );
 		$this->urlFor->image( ImageFixtures::croppedImage() )->fit( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidCropMode() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( \InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid crop mode "moo"' );
 		$this->urlFor->image( ImageFixtures::croppedImage() )->crop( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidAutoMode() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( \InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid auto mode "moo"' );
 		$this->urlFor->image( ImageFixtures::croppedImage() )->auto( 'moo' );
 	}
 
 	public function testShouldThrowOnInvalidFrameNumber() {
-		$this->expectException( InvalidArgumentException::class );
+		$this->expectException( \InvalidArgumentException::class );
 		$this->expectExceptionMessage( 'Invalid frame value "2"' );
 		$this->urlFor->image( ImageFixtures::croppedImage() )->frame( 2 );
 	}

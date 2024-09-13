@@ -1,5 +1,7 @@
 <?php
 
+namespace SanityImageUrl;
+
 require_once 'parseAssetId.php';
 require_once 'parseSource.php';
 require_once 'types.php';
@@ -7,7 +9,7 @@ require_once 'types.php';
 /**
  * Mappings from specification names to URL parameter names
  */
-const SPEC_NAME_TO_URL_NAME_MAPPINGS = [
+define( 'SPEC_NAME_TO_URL_NAME_MAPPINGS', [
 	[ 'width', 'w' ],
 	[ 'height', 'h' ],
 	[ 'format', 'fm' ],
@@ -28,7 +30,7 @@ const SPEC_NAME_TO_URL_NAME_MAPPINGS = [
 	[ 'dpr', 'dpr' ],
 	[ 'pad', 'pad' ],
 	[ 'frame', 'frame' ]
-];
+] );
 
 /**
  * Generate URL for the given image options.
@@ -44,7 +46,7 @@ function urlForImage( $options ) {
 
 	$image = parseSource( $source );
 	if ( ! $image ) {
-		throw new Exception( "Unable to resolve image URL from source (" . json_encode( $source ) . ")" );
+		throw new \Exception( "Unable to resolve image URL from source (" . json_encode( $source ) . ")" );
 	}
 
 	$id    = $image[ 'asset' ][ '_ref' ] ?? $image[ 'asset' ][ '_id' ] ?? '';
@@ -82,11 +84,11 @@ function urlForImage( $options ) {
 /**
  * Converts a specification to an image URL.
  *
- * @param ImageUrlBuilderOptionsWithAsset $spec
+ * @param array $spec
  *
  * @return string
  */
-function specToImageUrl( $spec ) {
+function specToImageUrl( array $spec ) {
 	$cdnUrl   = rtrim( $spec[ 'baseUrl' ] ?? 'https://cdn.sanity.io', '/' );
 	$filename = "{$spec['asset']['id']}-{$spec['asset']['width']}x{$spec['asset']['height']}.{$spec['asset']['format']}";
 	$baseUrl  = "{$cdnUrl}/images/{$spec['projectId']}/{$spec['dataset']}/{$filename}";

@@ -1,5 +1,7 @@
 <?php
 
+namespace SanityImageUrl;
+
 /**
  * Type-checking functions for different types of Sanity image sources.
  */

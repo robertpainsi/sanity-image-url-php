@@ -1,5 +1,7 @@
 <?php
 
+namespace SanityImageUrlTest;
+
 class ImageFixtures {
 	public static function imageWithNoCropSpecified() {
 		return [

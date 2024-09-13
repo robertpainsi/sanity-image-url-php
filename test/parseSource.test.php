@@ -1,9 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace SanityImageUrlTest;
 
 require_once 'fixtures.php';
 require_once '../src/parseSource.php';
+
+use PHPUnit\Framework\TestCase;
+use function SanityImageUrl\parseSource;
 
 class ParseSourceTest extends TestCase {
 	private function compareParsedSource( $outputSrc, $expectedSrc ) {

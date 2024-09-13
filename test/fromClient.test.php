@@ -1,8 +1,11 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace SanityImageUrlTest;
 
 require_once '../src/builder.php';
+
+use PHPUnit\Framework\TestCase;
+use function SanityImageUrl\urlBuilder;
 
 class InitFromClientTest extends TestCase {
 	public function testCanGetConfigFromClient() {

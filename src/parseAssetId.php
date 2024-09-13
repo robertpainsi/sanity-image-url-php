@@ -1,5 +1,7 @@
 <?php
 
+namespace SanityImageUrl;
+
 /**
  * Parse an asset reference string and extract the id, width, height, and format.
  *
@@ -14,7 +16,7 @@ function parseAssetId( string $ref ): array {
 	// Split the reference string by '-' and extract the parts
 	$parts = explode( '-', $ref );
 	if ( count( $parts ) < 4 ) {
-		throw new Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
+		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
 	// Destructure the split array
@@ -22,13 +24,13 @@ function parseAssetId( string $ref ): array {
 
 	// Validate extracted parts
 	if ( ! $id || ! $dimensionString || ! $format ) {
-		throw new Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
+		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
 	// Split dimensions by 'x'
 	$dimensions = explode( 'x', $dimensionString );
 	if ( count( $dimensions ) !== 2 ) {
-		throw new Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
+		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
 	list( $imgWidthStr, $imgHeightStr ) = $dimensions;
@@ -38,7 +40,7 @@ function parseAssetId( string $ref ): array {
 
 	// Check if the width and height are valid numbers
 	if ( ! is_finite( $width ) || ! is_finite( $height ) ) {
-		throw new Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
+		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
 	// Return the parsed asset data
