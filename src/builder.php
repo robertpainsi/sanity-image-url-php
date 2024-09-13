@@ -100,72 +100,72 @@ class ImageUrlBuilder {
 	}
 
 	// Specify the dataset
-	public function dataset( string $dataset ) {
+	public function dataset( string $dataset ): ImageUrlBuilder {
 		return $this->withOptions( [ 'dataset' => $dataset ] );
 	}
 
 	// Specify the projectId
-	public function projectId( string $projectId ) {
+	public function projectId( string $projectId ): ImageUrlBuilder {
 		return $this->withOptions( [ 'projectId' => $projectId ] );
 	}
 
 	// Specify background color
-	public function bg( string $bg ) {
+	public function bg( string $bg ): ImageUrlBuilder {
 		return $this->withOptions( [ 'bg' => $bg ] );
 	}
 
 	// Set DPR scaling factor
-	public function dpr( float $dpr ) {
+	public function dpr( float $dpr ): ImageUrlBuilder {
 		return $this->withOptions( ( $dpr && $dpr !== 1.0 ) ? [ 'dpr' => $dpr ] : [] );
 	}
 
 	// Specify the width of the image in pixels
-	public function width( float $width ) {
+	public function width( float $width ): ImageUrlBuilder {
 		return $this->withOptions( [ 'width' => $width ] );
 	}
 
 	// Specify the height of the image in pixels
-	public function height( float $height ) {
+	public function height( float $height ): ImageUrlBuilder {
 		return $this->withOptions( [ 'height' => $height ] );
 	}
 
 	// Specify focal point in fraction of image dimensions. Each component 0.0-1.0
-	public function focalPoint( float $x, float $y ) {
+	public function focalPoint( float $x, float $y ): ImageUrlBuilder {
 		return $this->withOptions( [ 'focalPoint' => [ 'x' => $x, 'y' => $y ] ] );
 	}
 
-	public function maxWidth( float $maxWidth ) {
+	public function maxWidth( float $maxWidth ): ImageUrlBuilder {
 		return $this->withOptions( [ 'maxWidth' => $maxWidth ] );
 	}
 
-	public function minWidth( float $minWidth ) {
+	public function minWidth( float $minWidth ): ImageUrlBuilder {
 		return $this->withOptions( [ 'minWidth' => $minWidth ] );
 	}
 
-	public function maxHeight( float $maxHeight ) {
+	public function maxHeight( float $maxHeight ): ImageUrlBuilder {
 		return $this->withOptions( [ 'maxHeight' => $maxHeight ] );
 	}
 
-	public function minHeight( float $minHeight ) {
+	public function minHeight( float $minHeight ): ImageUrlBuilder {
 		return $this->withOptions( [ 'minHeight' => $minHeight ] );
 	}
 
 	// Specify width and height in pixels
-	public function size( float $width, float $height ) {
+	public function size( float $width, float $height ): ImageUrlBuilder {
 		return $this->withOptions( [ 'width' => $width, 'height' => $height ] );
 	}
 
 	// Specify blur between 0 and 100
-	public function blur( float $blur ) {
+	public function blur( float $blur ): ImageUrlBuilder {
 		return $this->withOptions( [ 'blur' => $blur ] );
 	}
 
-	public function sharpen( float $sharpen ) {
+	public function sharpen( float $sharpen ): ImageUrlBuilder {
 		return $this->withOptions( [ 'sharpen' => $sharpen ] );
 	}
 
 	// Specify the desired rectangle of the image
-	public function rect( float $left, float $top, float $width, float $height ) {
+	public function rect( float $left, float $top, float $width, float $height ): ImageUrlBuilder {
 		return $this->withOptions( [
 			'rect' => [
 				'left'   => $left,
@@ -177,21 +177,21 @@ class ImageUrlBuilder {
 	}
 
 	// Specify the image format of the image. 'jpg', 'pjpg', 'png', 'webp'
-	public function format( string $format ) {
+	public function format( string $format ): ImageUrlBuilder {
 		return $this->withOptions( [ 'format' => $format ] );
 	}
 
-	public function invert( bool $invert ) {
+	public function invert( bool $invert ): ImageUrlBuilder {
 		return $this->withOptions( [ 'invert' => ( $invert ) ? 'true' : 'false' ] );
 	}
 
 	// Rotation in degrees 0, 90, 180, 270
-	public function orientation( float $orientation ) {
+	public function orientation( float $orientation ): ImageUrlBuilder {
 		return $this->withOptions( [ 'orientation' => $orientation ] );
 	}
 
 	// Compression quality 0-100
-	public function quality( float $quality ) {
+	public function quality( float $quality ): ImageUrlBuilder {
 		return $this->withOptions( [ 'quality' => $quality ] );
 	}
 
@@ -202,26 +202,26 @@ class ImageUrlBuilder {
 	 *
 	 * @return ImageUrlBuilder
 	 */
-	public function forceDownload( $download ) {
+	public function forceDownload( $download ): ImageUrlBuilder {
 		return $this->withOptions( [ 'download' => $download ] );
 	}
 
 	// Flip image horizontally
-	public function flipHorizontal() {
+	public function flipHorizontal(): ImageUrlBuilder {
 		return $this->withOptions( [ 'flipHorizontal' => true ] );
 	}
 
 	// Flip image vertically
-	public function flipVertical() {
+	public function flipVertical(): ImageUrlBuilder {
 		return $this->withOptions( [ 'flipVertical' => true ] );
 	}
 
 	// Ignore crop/hotspot from image record, even when present
-	public function ignoreImageParams() {
+	public function ignoreImageParams(): ImageUrlBuilder {
 		return $this->withOptions( [ 'ignoreImageParams' => true ] );
 	}
 
-	public function fit( string $value ) {
+	public function fit( string $value ): ImageUrlBuilder {
 		if ( ! in_array( $value, VALID_FITS ) ) {
 			throw new \InvalidArgumentException( "Invalid fit mode \"$value\"" );
 		}
@@ -229,7 +229,7 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'fit' => $value ] );
 	}
 
-	public function crop( string $value ) {
+	public function crop( string $value ): ImageUrlBuilder {
 		if ( ! in_array( $value, VALID_CROPS ) ) {
 			throw new \InvalidArgumentException( "Invalid crop mode \"$value\"" );
 		}
@@ -238,11 +238,11 @@ class ImageUrlBuilder {
 	}
 
 	// Saturation
-	public function saturation( float $saturation ) {
+	public function saturation( float $saturation ): ImageUrlBuilder {
 		return $this->withOptions( [ 'saturation' => $saturation ] );
 	}
 
-	public function auto( string $value ) {
+	public function auto( string $value ): ImageUrlBuilder {
 		if ( ! in_array( $value, VALID_AUTO_MODES ) ) {
 			throw new \InvalidArgumentException( "Invalid auto mode \"$value\"" );
 		}
@@ -251,11 +251,11 @@ class ImageUrlBuilder {
 	}
 
 	// Specify the number of pixels to pad the image
-	public function pad( float $pad ) {
+	public function pad( float $pad ): ImageUrlBuilder {
 		return $this->withOptions( [ 'pad' => $pad ] );
 	}
 
-	public function frame( float $frame ) {
+	public function frame( float $frame ): ImageUrlBuilder {
 		if ( $frame !== 1.0 ) {
 			throw new \InvalidArgumentException( "Invalid frame value \"$frame\"" );
 		}
@@ -264,15 +264,11 @@ class ImageUrlBuilder {
 	}
 
 	// Gets the url based on the submitted parameters
-	public function url() {
+	public function url(): string {
 		return urlForImage( $this->options );
 	}
 
-	public function toString() {
-		return $this->url();
-	}
-
-	public function __toString() {
+	public function __toString(): string {
 		return $this->url();
 	}
 }
