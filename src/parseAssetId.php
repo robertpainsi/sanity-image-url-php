@@ -10,8 +10,7 @@ function parseAssetId( string $ref ): array {
 		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
-	list( , $id, $dimensionString, $format ) = $parts;
-
+	[ , $id, $dimensionString, $format ] = $parts;
 	if ( ! $id || ! $dimensionString || ! $format ) {
 		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
@@ -21,12 +20,13 @@ function parseAssetId( string $ref ): array {
 		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
-	list( $imgWidthStr, $imgHeightStr ) = $dimensions;
+	[ $imgWidthStr, $imgHeightStr ] = $dimensions;
 
 	$width  = is_numeric( $imgWidthStr ) ? (float) $imgWidthStr : NAN;
 	$height = is_numeric( $imgHeightStr ) ? (float) $imgHeightStr : NAN;
 
-	if ( ! is_finite( $width ) || ! is_finite( $height ) ) {
+	$isValidAssetId = is_finite( $width ) && is_finite( $height );
+	if ( ! $isValidAssetId ) {
 		throw new \Exception( "Malformed asset _ref '{$ref}'. Expected an id like \"{$example}\"." );
 	}
 
