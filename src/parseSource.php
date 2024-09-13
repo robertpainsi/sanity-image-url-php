@@ -2,52 +2,60 @@
 
 namespace SanityImageUrl;
 
-function isRef( $src ) {
-	return is_array( $src ) && isset( $src[ '_ref' ] ) && is_string( $src[ '_ref' ] );
+function isRef( array $src ): bool {
+	return isset( $src[ '_ref' ] ) && is_string( $src[ '_ref' ] );
 }
 
-function isAsset( $src ) {
-	return is_array( $src ) && isset( $src[ '_id' ] ) && is_string( $src[ '_id' ] );
+function isAsset( array $src ): bool {
+	return isset( $src[ '_id' ] ) && is_string( $src[ '_id' ] );
 }
 
-function isAssetStub( $src ) {
-	return is_array( $src ) && isset( $src[ 'asset' ] ) && is_array( $src[ 'asset' ] ) && isset( $src[ 'asset' ][ 'url' ] ) && is_string( $src[ 'asset' ][ 'url' ] );
+function isAssetStub( array $src ): bool {
+	return isset( $src[ 'asset' ][ 'url' ] ) && is_array( $src[ 'asset' ] ) && is_string( $src[ 'asset' ][ 'url' ] );
 }
 
-function parseSource( $source = null ) {
+// Convert an asset-id, asset or image to an image record suitable for processing
+// eslint-disable-next-line complexity
+function parseSource( string|array $source = null ): array|null {
 	if ( ! $source ) {
 		return null;
 	}
 
-	$image = null;
-
 	if ( is_string( $source ) && isUrl( $source ) ) {
+		// Someone passed an existing image url?
 		$image = [
 			'asset' => [ '_ref' => urlToId( $source ) ],
 		];
 	} elseif ( is_string( $source ) ) {
+		// Just an asset id
 		$image = [
 			'asset' => [ '_ref' => $source ],
 		];
 	} elseif ( isRef( $source ) ) {
+		// We just got passed an asset directly
 		$image = [
 			'asset' => $source,
 		];
 	} elseif ( isAsset( $source ) ) {
+		// If we were passed an image asset document
 		$image = [
 			'asset' => [
 				'_ref' => $source[ '_id' ] ?? '',
 			],
 		];
 	} elseif ( isAssetStub( $source ) ) {
+		// If we were passed a partial asset (`url`, but no `_id`)
 		$image = [
 			'asset' => [
 				'_ref' => urlToId( $source[ 'asset' ][ 'url' ] ),
 			],
 		];
 	} elseif ( isset( $source[ 'asset' ] ) && is_array( $source[ 'asset' ] ) ) {
+		// Probably an actual image with materialized asset
 		$image = $source;
 	} else {
+		// We got something that does not look like an image, or it is an image
+		// that currently isn't sporting an asset.
 		return null;
 	}
 
@@ -70,7 +78,7 @@ function urlToId( $url ) {
 	$parts    = explode( '/', $url );
 	$lastPart = end( $parts );
 
-	return preg_replace( '/\.([a-z]+)$/', '-$1', "image-{$lastPart}" );
+	return preg_replace( '/\.([a-z]+)$/', '-$1', "image-$lastPart" );
 }
 
 function applyDefaults( array $image ) {
