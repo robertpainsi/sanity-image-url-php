@@ -2,8 +2,7 @@
 
 namespace SanityImageUrlTest;
 
-// Include the necessary files
-require_once '../src/builder.php';  // Assuming imgUrl function is defined here
+require_once '../src/builder.php';
 
 use PHPUnit\Framework\TestCase;
 use function SanityImageUrl\urlBuilder;
@@ -27,7 +26,7 @@ class CustomDomainsTest extends TestCase {
 		$options = [
 			'projectId' => 'xyz321',
 			'dataset'   => 'staging',
-			'baseUrl'   => 'https://mycustom.domain/', // Trailing slash in baseUrl
+			'baseUrl'   => 'https://mycustom.domain/',
 		];
 
 		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();

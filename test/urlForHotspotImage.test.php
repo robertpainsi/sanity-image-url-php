@@ -2,7 +2,6 @@
 
 namespace SanityImageUrlTest;
 
-// Include the function to test
 require_once '../src/urlForImage.php';
 require_once 'fixtures.php';
 

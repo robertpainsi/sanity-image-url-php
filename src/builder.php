@@ -4,28 +4,18 @@ namespace SanityImageUrl;
 
 require_once 'urlForImage.php';
 
-// Define valid modes as constants
 $validFits      = [ 'clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min' ];
 $validCrops     = [ 'top', 'bottom', 'left', 'right', 'center', 'focalpoint', 'entropy' ];
 $validAutoModes = [ 'format' ];
 
-/**
- * Check if the client is of type SanityModernClientLike
- */
 function isSanityModernClientLike( $client ): bool {
 	return $client && method_exists( $client, 'config' );
 }
 
-/**
- * Check if the client is of type SanityClientLike
- */
 function isSanityClientLike( $client ): bool {
 	return $client && isset( $client[ 'clientConfig' ] );
 }
 
-/**
- * Rewrite the spec name
- */
 function rewriteSpecName( $key ) {
 	$specs = SPEC_NAME_TO_URL_NAME_MAPPINGS;
 	foreach ( $specs as $entry ) {
@@ -38,11 +28,7 @@ function rewriteSpecName( $key ) {
 	return $key;
 }
 
-/**
- * Main function to build the URL
- */
 function urlBuilder( $options = null ) {
-	// Did we get a modernish client?
 	if ( isSanityModernClientLike( $options ) ) {
 		$config  = $options->config();
 		$apiHost = $config[ 'apiHost' ] ?? 'https://api.sanity.io';
@@ -54,7 +40,6 @@ function urlBuilder( $options = null ) {
 		] );
 	}
 
-	// Did we get a SanityClient?
 	if ( isSanityClientLike( $options ) ) {
 		$config = $options[ 'clientConfig' ];
 		$apiHost = $config[ 'apiHost' ] ?? 'https://api.sanity.io';
@@ -66,13 +51,9 @@ function urlBuilder( $options = null ) {
 		] );
 	}
 
-	// Or just accept the options as given
 	return new ImageUrlBuilder( null, $options );
 }
 
-/**
- * ImageUrlBuilder class in PHP
- */
 class ImageUrlBuilder {
 	public $options;
 

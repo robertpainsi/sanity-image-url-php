@@ -4,11 +4,7 @@ namespace SanityImageUrl;
 
 require_once 'parseAssetId.php';
 require_once 'parseSource.php';
-require_once 'types.php';
 
-/**
- * Mappings from specification names to URL parameter names
- */
 define( 'SPEC_NAME_TO_URL_NAME_MAPPINGS', [
 	[ 'width', 'w' ],
 	[ 'height', 'h' ],
@@ -32,13 +28,6 @@ define( 'SPEC_NAME_TO_URL_NAME_MAPPINGS', [
 	[ 'frame', 'frame' ]
 ] );
 
-/**
- * Generate URL for the given image options.
- *
- * @param ImageUrlBuilderOptions $options
- *
- * @return string
- */
 function urlForImage( $options ) {
 	$spec   = array_merge( [], (array) $options );
 	$source = $spec[ 'source' ] ?? null;
@@ -52,7 +41,6 @@ function urlForImage( $options ) {
 	$id    = $image[ 'asset' ][ '_ref' ] ?? $image[ 'asset' ][ '_id' ] ?? '';
 	$asset = parseAssetId( $id );
 
-	// Compute crop rect in terms of pixel coordinates in the raw source image
 	$cropLeft = round( $image[ 'crop' ][ 'left' ] * $asset[ 'width' ] );
 	$cropTop  = round( $image[ 'crop' ][ 'top' ] * $asset[ 'height' ] );
 	$crop     = [
@@ -62,7 +50,6 @@ function urlForImage( $options ) {
 		'height' => round( $asset[ 'height' ] - $image[ 'crop' ][ 'bottom' ] * $asset[ 'height' ] - $cropTop ),
 	];
 
-	// Compute hot spot rect in terms of pixel coordinates
 	$hotSpotVerticalRadius   = ( $image[ 'hotspot' ][ 'height' ] * $asset[ 'height' ] ) / 2;
 	$hotSpotHorizontalRadius = ( $image[ 'hotspot' ][ 'width' ] * $asset[ 'width' ] ) / 2;
 	$hotSpotCenterX          = $image[ 'hotspot' ][ 'x' ] * $asset[ 'width' ];
@@ -81,13 +68,6 @@ function urlForImage( $options ) {
 	return specToImageUrl( array_merge( $spec, [ 'asset' => $asset ] ) );
 }
 
-/**
- * Converts a specification to an image URL.
- *
- * @param array $spec
- *
- * @return string
- */
 function specToImageUrl( array $spec ) {
 	$cdnUrl   = rtrim( $spec[ 'baseUrl' ] ?? 'https://cdn.sanity.io', '/' );
 	$filename = "{$spec['asset']['id']}-{$spec['asset']['width']}x{$spec['asset']['height']}.{$spec['asset']['format']}";
@@ -140,14 +120,6 @@ function specToImageUrl( array $spec ) {
 	return $baseUrl . '?' . implode( '&', $params );
 }
 
-/**
- * Calculates fitting specifications for cropping and hotspots.
- *
- * @param array $source ['crop' => CropSpec, 'hotspot' => HotspotSpec]
- * @param ImageUrlBuilderOptions $spec
- *
- * @return SanityImageFitResult
- */
 function fit( $source, $spec ) {
 	$cropRect = [];
 

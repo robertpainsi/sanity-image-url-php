@@ -9,7 +9,6 @@ use function SanityImageUrl\urlBuilder;
 
 class InitFromClientTest extends TestCase {
 	public function testCanGetConfigFromClient() {
-		// Mock client with configuration
 		$client = [
 			'clientConfig' => [
 				'projectId' => 'abc123',
@@ -20,7 +19,6 @@ class InitFromClientTest extends TestCase {
 
 		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' )->toString();
 
-		// Assert that the generated URL matches the expected result
 		$this->assertEquals(
 			'https://cdn.sanity.io/images/abc123/foo/abc123-200x200.png',
 			$result
@@ -28,7 +26,6 @@ class InitFromClientTest extends TestCase {
 	}
 
 	public function testCanGetBaseUrlFromClient() {
-		// Mock client with configuration
 		$client = [
 			'clientConfig' => [
 				'apiHost'   => 'https://api.sanity.lol',
@@ -39,7 +36,6 @@ class InitFromClientTest extends TestCase {
 
 		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' )->toString();
 
-		// Assert that the generated URL matches the expected result
 		$this->assertEquals(
 			'https://cdn.sanity.lol/images/abc123/foo/abc123-200x200.png',
 			$result
