@@ -17,7 +17,7 @@ class InitFromClientTest extends TestCase {
 			],
 		];
 
-		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' )->toString();
+		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' );
 
 		$this->assertEquals(
 			'https://cdn.sanity.io/images/abc123/foo/abc123-200x200.png',
@@ -34,7 +34,7 @@ class InitFromClientTest extends TestCase {
 			],
 		];
 
-		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' )->toString();
+		$result = urlBuilder( $client )->image( 'image-abc123-200x200-png' );
 
 		$this->assertEquals(
 			'https://cdn.sanity.lol/images/abc123/foo/abc123-200x200.png',

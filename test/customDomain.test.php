@@ -15,7 +15,7 @@ class CustomDomainsTest extends TestCase {
 			'baseUrl'   => 'https://mycustom.domain',
 		];
 
-		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = (string) urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' );
 		$this->assertEquals(
 			'https://mycustom.domain/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url
@@ -29,7 +29,7 @@ class CustomDomainsTest extends TestCase {
 			'baseUrl'   => 'https://mycustom.domain/',
 		];
 
-		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' );
 		$this->assertEquals(
 			'https://mycustom.domain/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url
@@ -45,7 +45,7 @@ class CustomDomainsTest extends TestCase {
 			],
 		];
 
-		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )->toString();
+		$url = urlBuilder( $options )->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' );
 		$this->assertEquals(
 			'https://cdn.totally.custom/images/xyz321/staging/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png',
 			$url

@@ -107,10 +107,9 @@ class BuilderTest extends TestCase {
 			],
 			[
 				'name'     => 'toString() aliases url()',
-				'actual'   => $urlFor->image( ImageFixtures::croppedImage() )
-				                     ->ignoreImageParams()
-				                     ->size( 100, 80 )
-				                     ->toString(),
+				'actual'   => (string) $urlFor->image( ImageFixtures::croppedImage() )
+				                              ->ignoreImageParams()
+				                              ->size( 100, 80 ),
 				'expected' => "https://cdn.sanity.io/images/zp7mbokg/production/Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000.jpg?w=100&h=80"
 			],
 			[
@@ -182,7 +181,7 @@ class BuilderTest extends TestCase {
 				'name'     => 'frame = 1',
 				'actual'   => $this->stripPath(
 					$urlFor->image( ImageFixtures::noHotspotImage() )
-					       ->frame( 1.0 )
+					       ->frame( 1 )
 					       ->url()
 				),
 				'expected' => "frame=1"
@@ -200,7 +199,7 @@ class BuilderTest extends TestCase {
 				'name'     => 'dpr scaling',
 				'actual'   => $this->stripPath(
 					$urlFor->image( ImageFixtures::noHotspotImage() )
-					       ->dpr( 3.0 )
+					       ->dpr( 3 )
 					       ->url()
 				),
 				'expected' => "dpr=3"
@@ -209,7 +208,7 @@ class BuilderTest extends TestCase {
 				'name'     => 'dpr scaling (noop on 1)',
 				'actual'   => $this->stripPath(
 					$urlFor->image( ImageFixtures::noHotspotImage() )
-					       ->dpr( 1.0 )
+					       ->dpr( 1 )
 					       ->url()
 				),
 				'expected' => ""

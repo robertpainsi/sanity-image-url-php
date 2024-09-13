@@ -5,7 +5,7 @@ namespace SanityImageUrl;
 require_once 'parseAssetId.php';
 require_once 'parseSource.php';
 
-define( 'SPEC_NAME_TO_URL_NAME_MAPPINGS', [
+const SPEC_NAME_TO_URL_NAME_MAPPINGS = [
 	[ 'width', 'w' ],
 	[ 'height', 'h' ],
 	[ 'format', 'fm' ],
@@ -26,7 +26,7 @@ define( 'SPEC_NAME_TO_URL_NAME_MAPPINGS', [
 	[ 'dpr', 'dpr' ],
 	[ 'pad', 'pad' ],
 	[ 'frame', 'frame' ]
-] );
+];
 
 function urlForImage( $options ) {
 	$spec   = array_merge( [], (array) $options );

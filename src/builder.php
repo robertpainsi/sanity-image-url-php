@@ -4,19 +4,19 @@ namespace SanityImageUrl;
 
 require_once 'urlForImage.php';
 
-$validFits      = [ 'clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min' ];
-$validCrops     = [ 'top', 'bottom', 'left', 'right', 'center', 'focalpoint', 'entropy' ];
-$validAutoModes = [ 'format' ];
+const VALID_FITS       = [ 'clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min' ];
+const VALID_CROPS      = [ 'top', 'bottom', 'left', 'right', 'center', 'focalpoint', 'entropy' ];
+const VALID_AUTO_MODES = [ 'format' ];
 
 function isSanityModernClientLike( $client ): bool {
-	return $client && method_exists( $client, 'config' );
+	return $client && is_object( $client ) && method_exists( $client, 'config' );
 }
 
 function isSanityClientLike( $client ): bool {
-	return $client && isset( $client[ 'clientConfig' ] );
+	return $client && is_array( $client ) && isset( $client[ 'clientConfig' ] );
 }
 
-function rewriteSpecName( $key ) {
+function rewriteSpecName( string $key ): string {
 	$specs = SPEC_NAME_TO_URL_NAME_MAPPINGS;
 	foreach ( $specs as $entry ) {
 		list( $specName, $param ) = $entry;
@@ -28,26 +28,32 @@ function rewriteSpecName( $key ) {
 	return $key;
 }
 
-function urlBuilder( $options = null ) {
+function urlBuilder( array|object $options = null ): ImageUrlBuilder {
 	if ( isSanityModernClientLike( $options ) ) {
-		$config  = $options->config();
-		$apiHost = $config[ 'apiHost' ] ?? 'https://api.sanity.io';
+		[ 'apiHost' => $apiHost, 'projectId' => $projectId, 'dataset' => $dataset ] = $options->config() + [
+			'apiHost'   => 'https://api.sanity.io',
+			'projectId' => null,
+			'dataset'   => null,
+		];
 
 		return new ImageUrlBuilder( null, [
-			'baseUrl'   => str_replace( 'https://api.', 'https://cdn.', $apiHost ),
-			'projectId' => $config[ 'projectId' ],
-			'dataset'   => $config[ 'dataset' ]
+			'baseUrl'   => preg_replace( '/^https:\/\/api\./', 'https://cdn.', $apiHost ),
+			'projectId' => $projectId,
+			'dataset'   => $dataset,
 		] );
 	}
 
 	if ( isSanityClientLike( $options ) ) {
-		$config = $options[ 'clientConfig' ];
-		$apiHost = $config[ 'apiHost' ] ?? 'https://api.sanity.io';
+		[ 'apiHost' => $apiHost, 'projectId' => $projectId, 'dataset' => $dataset ] = $options[ 'clientConfig' ] + [
+			'apiHost'   => 'https://api.sanity.io',
+			'projectId' => null,
+			'dataset'   => null,
+		];
 
 		return new ImageUrlBuilder( null, [
-			'baseUrl'   => str_replace( 'https://api.', 'https://cdn.', $apiHost ),
-			'projectId' => $config[ 'projectId' ],
-			'dataset'   => $config[ 'dataset' ]
+			'baseUrl'   => preg_replace( '/^https:\/\/api\./', 'https://cdn.', $apiHost ),
+			'projectId' => $projectId,
+			'dataset'   => $dataset,
 		] );
 	}
 
@@ -57,11 +63,13 @@ function urlBuilder( $options = null ) {
 class ImageUrlBuilder {
 	public $options;
 
-	public function __construct( $parent = null, $options = [] ) {
-		$this->options = $parent ? array_merge( $parent->options ?? [], $options ?? [] ) : $options;
+	public function __construct( ImageUrlBuilder $parent = null, array $options = null ) {
+		$this->options = ( $parent )
+			? array_merge( $parent->options ?? [], $options ?? [] ) // Merge parent options
+			: ( $options ?? [] ); // Copy options
 	}
 
-	public function withOptions( array $options ) {
+	public function withOptions( array $options ): ImageUrlBuilder {
 		$baseUrl = $options[ 'baseUrl' ] ?? $this->options[ 'baseUrl' ] ?? null;
 
 		$newOptions = [ 'baseUrl' => $baseUrl ];
@@ -73,34 +81,44 @@ class ImageUrlBuilder {
 		return new self( $this, $newOptions );
 	}
 
-	public function image( $source ) {
+	// The image to be represented. Accepts a Sanity 'image'-document, 'asset'-document or
+	// _id of asset. To get the benefit of automatic hot-spot/crop integration with the content
+	// studio, the 'image'-document must be provided.
+	public function image( array|string $source ): ImageUrlBuilder {
 		return $this->withOptions( [ 'source' => $source ] );
 	}
 
+	// Specify the dataset
 	public function dataset( string $dataset ) {
 		return $this->withOptions( [ 'dataset' => $dataset ] );
 	}
 
+	// Specify the projectId
 	public function projectId( string $projectId ) {
 		return $this->withOptions( [ 'projectId' => $projectId ] );
 	}
 
+	// Specify background color
 	public function bg( string $bg ) {
 		return $this->withOptions( [ 'bg' => $bg ] );
 	}
 
+	// Set DPR scaling factor
 	public function dpr( float $dpr ) {
-		return $this->withOptions( $dpr && $dpr !== 1.0 ? [ 'dpr' => $dpr ] : [] );
+		return $this->withOptions( ( $dpr && $dpr !== 1.0 ) ? [ 'dpr' => $dpr ] : [] );
 	}
 
+	// Specify the width of the image in pixels
 	public function width( float $width ) {
 		return $this->withOptions( [ 'width' => $width ] );
 	}
 
+	// Specify the height of the image in pixels
 	public function height( float $height ) {
 		return $this->withOptions( [ 'height' => $height ] );
 	}
 
+	// Specify focal point in fraction of image dimensions. Each component 0.0-1.0
 	public function focalPoint( float $x, float $y ) {
 		return $this->withOptions( [ 'focalPoint' => [ 'x' => $x, 'y' => $y ] ] );
 	}
@@ -121,10 +139,12 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'minHeight' => $minHeight ] );
 	}
 
+	// Specify width and height in pixels
 	public function size( float $width, float $height ) {
 		return $this->withOptions( [ 'width' => $width, 'height' => $height ] );
 	}
 
+	// Specify blur between 0 and 100
 	public function blur( float $blur ) {
 		return $this->withOptions( [ 'blur' => $blur ] );
 	}
@@ -133,6 +153,7 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'sharpen' => $sharpen ] );
 	}
 
+	// Specify the desired rectangle of the image
 	public function rect( float $left, float $top, float $width, float $height ) {
 		return $this->withOptions( [
 			'rect' => [
@@ -144,6 +165,7 @@ class ImageUrlBuilder {
 		] );
 	}
 
+	// Specify the image format of the image. 'jpg', 'pjpg', 'png', 'webp'
 	public function format( string $format ) {
 		return $this->withOptions( [ 'format' => $format ] );
 	}
@@ -152,33 +174,38 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'invert' => ( $invert ) ? 'true' : 'false' ] );
 	}
 
+	// Rotation in degrees 0, 90, 180, 270
 	public function orientation( float $orientation ) {
 		return $this->withOptions( [ 'orientation' => $orientation ] );
 	}
 
+	// Compression quality 0-100
 	public function quality( float $quality ) {
 		return $this->withOptions( [ 'quality' => $quality ] );
 	}
 
-	public function forceDownload( $download ) {
+	// Make it a download link. Parameter is default filename.
+	public function forceDownload( bool|string $download ) {
 		return $this->withOptions( [ 'download' => $download ] );
 	}
 
+	// Flip image horizontally
 	public function flipHorizontal() {
 		return $this->withOptions( [ 'flipHorizontal' => true ] );
 	}
 
+	// Flip image vertically
 	public function flipVertical() {
 		return $this->withOptions( [ 'flipVertical' => true ] );
 	}
 
+	// Ignore crop/hotspot from image record, even when present
 	public function ignoreImageParams() {
 		return $this->withOptions( [ 'ignoreImageParams' => true ] );
 	}
 
 	public function fit( string $value ) {
-		global $validFits;
-		if ( ! in_array( $value, $validFits ) ) {
+		if ( ! in_array( $value, VALID_FITS ) ) {
 			throw new \InvalidArgumentException( "Invalid fit mode \"$value\"" );
 		}
 
@@ -186,27 +213,27 @@ class ImageUrlBuilder {
 	}
 
 	public function crop( string $value ) {
-		global $validCrops;
-		if ( ! in_array( $value, $validCrops ) ) {
+		if ( ! in_array( $value, VALID_CROPS ) ) {
 			throw new \InvalidArgumentException( "Invalid crop mode \"$value\"" );
 		}
 
 		return $this->withOptions( [ 'crop' => $value ] );
 	}
 
+	// Saturation
 	public function saturation( float $saturation ) {
 		return $this->withOptions( [ 'saturation' => $saturation ] );
 	}
 
 	public function auto( string $value ) {
-		global $validAutoModes;
-		if ( ! in_array( $value, $validAutoModes ) ) {
+		if ( ! in_array( $value, VALID_AUTO_MODES ) ) {
 			throw new \InvalidArgumentException( "Invalid auto mode \"$value\"" );
 		}
 
 		return $this->withOptions( [ 'auto' => $value ] );
 	}
 
+	// Specify the number of pixels to pad the image
 	public function pad( float $pad ) {
 		return $this->withOptions( [ 'pad' => $pad ] );
 	}
@@ -219,6 +246,7 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'frame' => $frame ] );
 	}
 
+	// Gets the url based on the submitted parameters
 	public function url() {
 		return urlForImage( $this->options );
 	}
