@@ -2,16 +2,17 @@
 
 namespace SanityImageUrl;
 
-function isRef( array $src ): bool {
-	return isset( $src[ '_ref' ] ) && is_string( $src[ '_ref' ] );
+function isRef( $src ): bool {
+	return is_array( $src ) && isset( $src[ '_ref' ] ) && is_string( $src[ '_ref' ] );
 }
 
-function isAsset( array $src ): bool {
-	return isset( $src[ '_id' ] ) && is_string( $src[ '_id' ] );
+function isAsset( $src ): bool {
+	return is_array( $src ) && isset( $src[ '_id' ] ) && is_string( $src[ '_id' ] );
 }
 
-function isAssetStub( array $src ): bool {
-	return isset( $src[ 'asset' ][ 'url' ] ) && is_array( $src[ 'asset' ] ) && is_string( $src[ 'asset' ][ 'url' ] );
+function isAssetStub( $src ): bool {
+	return is_array( $src ) && isset( $src[ 'asset' ] ) && is_array( $src[ 'asset' ] )
+	       && isset( $src[ 'asset' ][ 'url' ] ) && is_string( $src[ 'asset' ][ 'url' ] );
 }
 
 
@@ -57,7 +58,7 @@ function parseSource( $source = null ) {
 				'_ref' => urlToId( $source[ 'asset' ][ 'url' ] ),
 			],
 		];
-	} elseif ( isset( $source[ 'asset' ] ) && is_array( $source[ 'asset' ] ) ) {
+	} elseif ( is_array( $source ) && isset( $source[ 'asset' ] ) && is_array( $source[ 'asset' ] ) ) {
 		// Probably an actual image with materialized asset
 		$image = $source;
 	} else {

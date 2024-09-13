@@ -62,12 +62,12 @@ class ParseSourceTest extends TestCase {
 		$this->assertEquals( $parsedSource[ 'crop' ][ 'bottom' ], 0.1 );
 	}
 
-// TODO: Fix testcase later
-//	public function testReturnsNullOnNonImageObject() {
-//		$this->assertNull( parseSource( new stdClass() ) );
-//	}
+	public function testReturnsNullOnNonImageObject() {
+		$this->assertNull( parseSource( new \stdClass() ) );
+	}
 
-// TODO: Fix testcase later
+	// NOTE: Unlike JavaScript, PHP does not have a feature similar to Object.defineProperties. Especially when using
+	// associative arrays. Therefore, this test is skipped.
 //	public function testImageWithMaterializedAssetReadOnly() {
 //		$noCrop = [
 //			'_type'   => 'image',
