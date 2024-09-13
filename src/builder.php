@@ -28,7 +28,12 @@ function rewriteSpecName( string $key ): string {
 	return $key;
 }
 
-function urlBuilder( array|object $options = null ): ImageUrlBuilder {
+/**
+ * @param array|object|null $options
+ *
+ * @return ImageUrlBuilder
+ */
+function urlBuilder( $options = null ): ImageUrlBuilder {
 	if ( isSanityModernClientLike( $options ) ) {
 		[ 'apiHost' => $apiHost, 'projectId' => $projectId, 'dataset' => $dataset ] = $options->config() + [
 			'apiHost'   => 'https://api.sanity.io',
@@ -81,10 +86,16 @@ class ImageUrlBuilder {
 		return new self( $this, $newOptions );
 	}
 
-	// The image to be represented. Accepts a Sanity 'image'-document, 'asset'-document or
-	// _id of asset. To get the benefit of automatic hot-spot/crop integration with the content
-	// studio, the 'image'-document must be provided.
-	public function image( array|string $source ): ImageUrlBuilder {
+	/**
+	 * The image to be represented. Accepts a Sanity 'image'-document, 'asset'-document or
+	 * _id of asset. To get the benefit of automatic hot-spot/crop integration with the content
+	 * studio, the 'image'-document must be provided.
+	 *
+	 * @param array|string $source
+	 *
+	 * @return ImageUrlBuilder
+	 */
+	public function image( $source ): ImageUrlBuilder {
 		return $this->withOptions( [ 'source' => $source ] );
 	}
 
@@ -184,8 +195,14 @@ class ImageUrlBuilder {
 		return $this->withOptions( [ 'quality' => $quality ] );
 	}
 
-	// Make it a download link. Parameter is default filename.
-	public function forceDownload( bool|string $download ) {
+	/**
+	 * Make it a download link. Parameter is default filename.
+	 *
+	 * @param bool|string $download
+	 *
+	 * @return ImageUrlBuilder
+	 */
+	public function forceDownload( $download ) {
 		return $this->withOptions( [ 'download' => $download ] );
 	}
 

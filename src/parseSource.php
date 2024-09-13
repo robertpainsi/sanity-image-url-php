@@ -14,9 +14,16 @@ function isAssetStub( array $src ): bool {
 	return isset( $src[ 'asset' ][ 'url' ] ) && is_array( $src[ 'asset' ] ) && is_string( $src[ 'asset' ][ 'url' ] );
 }
 
-// Convert an asset-id, asset or image to an image record suitable for processing
-// eslint-disable-next-line complexity
-function parseSource( string|array $source = null ): array|null {
+
+/**
+ * Convert an asset-id, asset or image to an image record suitable for processing
+ * eslint-disable-next-line complexity
+ *
+ * @param string|array|null $source
+ *
+ * @return array|null
+ */
+function parseSource( $source = null ) {
 	if ( ! $source ) {
 		return null;
 	}
