@@ -6,10 +6,11 @@ require_once 'fixtures.php';
 require_once '../src/builder.php';
 
 use PHPUnit\Framework\TestCase;
+use SanityImageUrl\ImageUrlBuilder;
 use function SanityImageUrl\urlBuilder;
 
 class BuilderTest extends TestCase {
-	private $urlFor;
+	private ImageUrlBuilder $urlFor;
 
 	protected function setUp(): void {
 		$this->urlFor = urlBuilder()->projectId( 'zp7mbokg' )->dataset( 'production' );
