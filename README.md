@@ -43,7 +43,7 @@ $builder = urlBuilder( [
 function urlFor( $source ) {
     global $builder;
 
-	return $builder->image( $source );
+    return $builder->image( $source );
 }
 ```
 
@@ -112,7 +112,7 @@ $builder = urlBuilder( $client );
 
 $authors = $client->fetch( "*[_type == 'author']" );
 foreach ( $authors as $author ) {
-	echo '<img src="' . $builder->image( $author[ 'image' ] )->width( 320 )->height( 640 )->url() . '" />';
+    echo '<img src="' . $builder->image( $author[ 'image' ] )->width( 320 )->height( 640 )->url() . '" />';
 }
 ```
 
@@ -226,16 +226,16 @@ You can specify a custom `baseUrl` in the builder options in order to override t
 use function SanityImageUrl\urlBuilder;
 
 $builder = urlBuilder( [
-	'baseUrl'   => 'https://my.custom.domain',
-	'projectId' => 'abc123',
-	'dataset'   => 'production',
+    'baseUrl'   => 'https://my.custom.domain',
+    'projectId' => 'abc123',
+    'dataset'   => 'production',
 ] );
 
 echo $builder->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-png' )
-	->auto( 'format' )
-	->fit( 'max' )
-	->width( 720 )
-	->toString();
+    ->auto( 'format' )
+    ->fit( 'max' )
+    ->width( 720 )
+    ->toString();
 
 // output: https://my.custom.domain/images/abc123/production/928ac96d53b0c9049836c86ff25fd3c009039a16-200x200.png?w=720&fit=max&auto=format
 ```
