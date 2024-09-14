@@ -2,8 +2,6 @@
 
 namespace SanityImageUrlTest;
 
-require_once '../src/parseAssetId.php';
-
 use PHPUnit\Framework\TestCase;
 use function SanityImageUrl\parseAssetId;
 

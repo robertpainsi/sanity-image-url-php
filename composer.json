@@ -1,4 +1,24 @@
 {
+    "name": "robertpainsi/sanity-image-url-php",
+    "description": "Tools to generate image urls from Sanity content in PHP",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "SanityImageUrl\\": "src/",
+            "SanityImageUrlTest\\": "test/"
+        },
+        "files": [
+            "src/parseAssetId.php",
+            "src/parseSource.php",
+            "src/urlBuilder.php",
+            "src/urlForImage.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.4"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9"
     }

@@ -82,6 +82,7 @@ fabric.properties
 
 /vendor/
 composer.phar
+composer.lock
 
 
 

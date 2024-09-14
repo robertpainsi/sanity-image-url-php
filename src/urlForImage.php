@@ -2,9 +2,6 @@
 
 namespace SanityImageUrl;
 
-require_once 'parseAssetId.php';
-require_once 'parseSource.php';
-
 const SPEC_NAME_TO_URL_NAME_MAPPINGS = [
 	[ 'width', 'w' ],
 	[ 'height', 'h' ],

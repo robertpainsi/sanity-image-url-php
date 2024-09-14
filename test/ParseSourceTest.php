@@ -2,9 +2,6 @@
 
 namespace SanityImageUrlTest;
 
-require_once 'fixtures.php';
-require_once '../src/parseSource.php';
-
 use PHPUnit\Framework\TestCase;
 use function SanityImageUrl\parseSource;
 

@@ -2,9 +2,6 @@
 
 namespace SanityImageUrlTest;
 
-require_once 'fixtures.php';
-require_once '../src/builder.php';
-
 use PHPUnit\Framework\TestCase;
 use SanityImageUrl\ImageUrlBuilder;
 use function SanityImageUrl\urlBuilder;

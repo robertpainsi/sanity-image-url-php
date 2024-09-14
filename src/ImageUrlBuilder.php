@@ -2,19 +2,9 @@
 
 namespace SanityImageUrl;
 
-require_once 'urlForImage.php';
-
 const VALID_FITS       = [ 'clip', 'crop', 'fill', 'fillmax', 'max', 'scale', 'min' ];
 const VALID_CROPS      = [ 'top', 'bottom', 'left', 'right', 'center', 'focalpoint', 'entropy' ];
 const VALID_AUTO_MODES = [ 'format' ];
-
-function isSanityModernClientLike( $client ): bool {
-	return $client && is_object( $client ) && method_exists( $client, 'config' );
-}
-
-function isSanityClientLike( $client ): bool {
-	return $client && is_array( $client ) && isset( $client[ 'clientConfig' ] );
-}
 
 function rewriteSpecName( string $key ): string {
 	$specs = SPEC_NAME_TO_URL_NAME_MAPPINGS;
@@ -28,42 +18,6 @@ function rewriteSpecName( string $key ): string {
 	return $key;
 }
 
-/**
- * @param array|object|null $options
- *
- * @return ImageUrlBuilder
- */
-function urlBuilder( $options = null ): ImageUrlBuilder {
-	if ( isSanityModernClientLike( $options ) ) {
-		[ 'apiHost' => $apiHost, 'projectId' => $projectId, 'dataset' => $dataset ] = $options->config() + [
-			'apiHost'   => 'https://api.sanity.io',
-			'projectId' => null,
-			'dataset'   => null,
-		];
-
-		return new ImageUrlBuilder( null, [
-			'baseUrl'   => preg_replace( '/^https:\/\/api\./', 'https://cdn.', $apiHost ),
-			'projectId' => $projectId,
-			'dataset'   => $dataset,
-		] );
-	}
-
-	if ( isSanityClientLike( $options ) ) {
-		[ 'apiHost' => $apiHost, 'projectId' => $projectId, 'dataset' => $dataset ] = $options[ 'clientConfig' ] + [
-			'apiHost'   => 'https://api.sanity.io',
-			'projectId' => null,
-			'dataset'   => null,
-		];
-
-		return new ImageUrlBuilder( null, [
-			'baseUrl'   => preg_replace( '/^https:\/\/api\./', 'https://cdn.', $apiHost ),
-			'projectId' => $projectId,
-			'dataset'   => $dataset,
-		] );
-	}
-
-	return new ImageUrlBuilder( null, $options );
-}
 
 class ImageUrlBuilder {
 	public $options;
@@ -266,6 +220,10 @@ class ImageUrlBuilder {
 	// Gets the url based on the submitted parameters
 	public function url(): string {
 		return urlForImage( $this->options );
+	}
+
+	public function toString(): string {
+		return $this->url();
 	}
 
 	public function __toString(): string {
