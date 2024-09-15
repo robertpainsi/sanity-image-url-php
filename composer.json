@@ -4,6 +4,18 @@
     "type": "library",
     "license": "MIT",
     "minimum-stability": "stable",
+    "scripts": {
+        "phpunit": "vendor/bin/phpunit",
+        "test": [
+            "@phpunit"
+        ]
+    },
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
     "autoload": {
         "psr-4": {
             "SanityImageUrl\\": "src/",
@@ -15,11 +27,5 @@
             "src/urlBuilder.php",
             "src/urlForImage.php"
         ]
-    },
-    "require": {
-        "php": ">=7.4"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^9"
     }
 }
