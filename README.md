@@ -50,12 +50,11 @@ function urlFor( $source ) {
 When working with the official [sanity-php](https://github.com/sanity-io/sanity-php) library, you can also initialize the `urlBuilder` by passing the `Sanity\Client` as parameter.
 
 ```php
-const SANITY_CONFIG = [
+$client  = new Sanity\Client( [
     'projectId' => 'zp7mbokg',
     'dataset'   => 'production',
     // ...
-];
-$client  = new Sanity\Client( SANITY_CONFIG );
+] );
 $builder = urlBuilder( $client );
 ```
 
@@ -102,13 +101,15 @@ export default {
 // author.php
 require_once 'vendor/autoload.php';
 
+use function SanityImageUrl\urlBuilder;
+
 const SANITY_CONFIG = [
     'projectId' => 'zp7mbokg',
     'dataset'   => 'production',
 ];
 
 $client  = new Sanity\Client( SANITY_CONFIG );
-$builder = urlBuilder( $client );
+$builder = urlBuilder( $client ); // Instead of $client you can also use the SANITY_CONFIG array
 
 $authors = $client->fetch( "*[_type == 'author']" );
 foreach ( $authors as $author ) {
@@ -223,8 +224,6 @@ Specifies min/max dimensions when cropping.
 You can specify a custom `baseUrl` in the builder options in order to override the default (`https://cdn.sanity.io`):
 
 ```php
-use function SanityImageUrl\urlBuilder;
-
 $builder = urlBuilder( [
     'baseUrl'   => 'https://my.custom.domain',
     'projectId' => 'abc123',
