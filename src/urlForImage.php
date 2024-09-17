@@ -80,7 +80,7 @@ function specToImageUrl( array $spec ): string {
 		// Only bother url with a crop if it actually crops anything
 		[ 'left' => $left, 'top' => $top, 'width' => $width, 'height' => $height ] = $spec[ 'rect' ];
 		$isEffectiveCrop =
-			$left !== 0.0 || $top !== 0.0 || $height !== $spec[ 'asset' ][ 'height' ] || $width !== $spec[ 'asset' ][ 'width' ];
+			$left != 0 || $top != 0 || $height != $spec[ 'asset' ][ 'height' ] || $width != $spec[ 'asset' ][ 'width' ];
 
 		if ( $isEffectiveCrop ) {
 			$params[] = "rect=$left,$top,$width,$height";
