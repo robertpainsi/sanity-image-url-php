@@ -5,7 +5,7 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "scripts": {
-        "phpunit": "vendor/bin/phpunit",
+        "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit",
         "test": [
             "@phpunit"
         ]

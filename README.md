@@ -1,5 +1,8 @@
 # PHP port of `@sanity/image-url`
 
+[![Packagist](https://img.shields.io/packagist/v/robertpainsi/sanity-image-url-php.svg?style=flat-square)](https://packagist.org/packages/robertpainsi/sanity-image-url-php)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/robertpainsi/sanity-image-url-php/ci.yml?style=flat-square&branch=main)](https://github.com/robertpainsi/sanity-image-url-php/actions)
+
 This PHP library is a direct port of the official Sanity JavaScript library [@sanity/image-url](https://github.com/sanity-io/image-url). Version maps to [@sanity/image-url @fff9fc1](https://github.com/sanity-io/image-url/commit/fff9fc1b77f334be195a65394bed71aeffa8f3bb) Aug 8, 2024.
 
 Quickly generate image urls from Sanity image records.
