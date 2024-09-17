@@ -8,7 +8,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
       - uses: php-actions/composer@v6
-      - run: echo "Composer dependencies have been installed"
-      - run: XDEBUG_MODE=coverage vendor/bin/phpunit
+      - name: Run tests
+        run: XDEBUG_MODE=coverage vendor/bin/phpunit
