@@ -5,8 +5,10 @@
     "license": "MIT",
     "minimum-stability": "stable",
     "scripts": {
+        "cs": "vendor/bin/phpcs src test",
         "phpunit": "XDEBUG_MODE=coverage vendor/bin/phpunit",
         "test": [
+            "@cs",
             "@phpunit"
         ]
     },
@@ -14,7 +16,8 @@
         "php": ">=7.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^9",
+        "squizlabs/php_codesniffer": "^3.10.2"
     },
     "autoload": {
         "psr-4": {
