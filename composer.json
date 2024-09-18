@@ -22,9 +22,9 @@
             "SanityImageUrlTest\\": "test/"
         },
         "files": [
+            "src/builder.php",
             "src/parseAssetId.php",
             "src/parseSource.php",
-            "src/urlBuilder.php",
             "src/urlForImage.php"
         ]
     }
