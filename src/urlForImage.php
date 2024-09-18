@@ -1,4 +1,7 @@
 <?php
+/**
+ * @link https://github.com/sanity-io/image-url/blob/main/src/urlForImage.ts
+ */
 
 namespace SanityImageUrl;
 
