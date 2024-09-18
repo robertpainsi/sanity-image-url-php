@@ -244,17 +244,15 @@ echo $builder->image( 'image-928ac96d53b0c9049836c86ff25fd3c009039a16-200x200-pn
 
 ## Feature requests
 
-Please only request new features on the [official GitHub project](https://github.com/sanity-io/image-url/issues). If implemented, this library will also implement the feature at a later point.
+Currently, there are no plans to support features that aren't in the [official JavaScript project](https://github.com/sanity-io/image-url). Please request new features on the [official GitHub project](https://github.com/sanity-io/image-url/issues) and if accepted and implemented, this library will also implement the feature at a later point.
 
 ## Issues
 
-Before submitting a new issue, please check if it doesn't exist already. If not, verify if this issue also exists in the [official JavaScript project](https://github.com/sanity-io/image-url). If the JavaScript code and PHP code behave differently, feel free to [report an issue](https://github.com/robertpainsi/sanity-image-url-php/issues/new).
+Before submitting a new issue, please check if it doesn't exist already. If not, verify if this issue also exists in the [official JavaScript project](https://github.com/sanity-io/image-url). If the JavaScript code and PHP code behave differently, feel free to [report the issue](https://github.com/robertpainsi/sanity-image-url-php/issues/new).
 
 ## Pull requests
 
-Only pull requests addressing different behavior between the [official JavaScript project](https://github.com/sanity-io/image-url) and this PHP project will be considered. The PHP code has been ported from the JavaScript code in a near line by line manner, which will make any future updates easier to implement. Changes to the structure or readability will most likely end in slower future updates and should be avoided.
-
-In short, let's try to keep the PHP code and JavaScript code in sync :handshake:
+Only pull requests addressing differences in behavior between the [official JavaScript project](https://github.com/sanity-io/image-url) and this PHP project will be considered. The PHP code has been ported from the JavaScript code in a near line by line manner, which will make any future updates easier to implement. Changes to the structure or readability will most likely end in slower future updates and should be avoided. So let's try to keep the PHP code and JavaScript code in sync :handshake:
 
 ## License
 
